@@ -25,8 +25,10 @@ def click_spot(key):
     print('clicking spot with registered key', key)
     if key not in registered:
         return
+    saved_position = mouse.position
     mouse.position = registered[key]
     mouse.click(button=Button.left)
+    mouse.position = saved_position
 
 
 def on_press(key):
