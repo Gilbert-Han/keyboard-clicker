@@ -34,7 +34,14 @@ def press_spot(key):
 def on_press(key):
     print('{0} pressed'.format(key))
     if key == Key.esc:
-        exit(1)
+        if registered == {}:
+            print('exiting program')
+            exit(1)
+        else:
+            print('clearing registered={}'.format(registered))
+            registered.clear()
+            print('cleared registered={}'.format(registered))
+            return
     if key in registered:
         press_spot(key)
     else:
