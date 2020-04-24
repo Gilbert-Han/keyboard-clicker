@@ -14,6 +14,7 @@ from pynput.mouse import Controller, Button
 mouse = pynput.mouse.Controller()
 
 registered = {}  # associate key with location
+saved_spots = {}
 
 
 def register(key):
@@ -21,14 +22,13 @@ def register(key):
     registered[key] = mouse.position
 
 
-def click_spot(key):
+def press_spot(key):
     print('clicking spot with registered key', key)
     if key not in registered:
         return
-    saved_position = mouse.position
+    saved_spots[key] = mouse.position
     mouse.position = registered[key]
-    mouse.click(button=Button.left)
-    mouse.position = saved_position
+    mouse.press(button=Button.left)
 
 
 def on_press(key):
@@ -36,17 +36,16 @@ def on_press(key):
     if key == Key.esc:
         exit(1)
     if key in registered:
-        click_spot(key)
+        press_spot(key)
     else:
         register(key)
 
 
 def on_release(key):
-    print('{0} release'.format(
-        key))
-    if key == Key.esc:
-        # Stop listener
-        return False
+    print('{0} release'.format(key))
+    mouse.release(button=Button.left)
+    if key in saved_spots:
+        mouse.position = saved_spots[key]
 
 
 # Collect events until released
