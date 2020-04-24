@@ -25,8 +25,6 @@ def click_spot(key):
     print('clicking spot with registered key', key)
     if key not in registered:
         return
-    print(type(mouse.position))
-    print(type(registered[key]))
     mouse.position = registered[key]
     mouse.click(button=Button.left)
 
