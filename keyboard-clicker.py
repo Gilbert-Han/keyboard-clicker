@@ -28,7 +28,7 @@ def press_spot(key):
         return
     saved_spots[key] = mouse.position
     mouse.position = registered[key]
-    mouse.press(button=Button.left)
+    mouse.click(button=Button.left)
 
 
 def on_press(key):
@@ -43,7 +43,6 @@ def on_press(key):
 
 def on_release(key):
     print('{0} release'.format(key))
-    mouse.release(button=Button.left)
     if key in saved_spots:
         mouse.position = saved_spots[key]
 
